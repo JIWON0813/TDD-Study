@@ -1,19 +1,39 @@
 import chapter2.*;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProfileTest {
+    private Profile profile;
+    private BooleanQuestion question;
+    private Criteria criteria;
+
+    @Before
+    public void create(){
+        Profile profile = new Profile("Bull Hockey");
+        Question question = new BooleanQuestion(1, "Got bonuses?");
+        Criteria criteria = new Criteria();
+    }
+
 
     @Test
     public void matchAnwsersFalseWhenMustMatchCriteriaNotMet(){
-        Profile profile = new Profile("Bull Hockey");
-        Question question = new BooleanQuestion(1, "Got bonuses?");
-        Answer profileAnswer = new Answer(question, Bool.FALSE);
-        profile.add(profileAnswer);
-        Criteria criteria = new Criteria();
-        Answer answer = new Answer(question, Bool.TRUE);
-        Criterion criterion = new Criterion(answer, Weight.DontCare);
+        profile.add(new Answer(question, Bool.FALSE));
+        Criterion criterion = new Criterion(new Answer(question, Bool.TRUE), Weight.MustMatch);
+
+        criteria.add(criterion);
+
+        boolean matches = profile.matches(criteria);
+
+        assertFalse(matches);
+    }
+
+    @Test
+    public void matchAnwsersFalseWhenMustMatchCriteria(){
+        profile.add(new Answer(question, Bool.FALSE));
+        Criterion criterion = new Criterion(new Answer(question, Bool.TRUE), Weight.DontCare);
 
         criteria.add(criterion);
 
