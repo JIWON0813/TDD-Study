@@ -1,7 +1,5 @@
 import chapter2.*;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +8,7 @@ class ProfileTest {
     private BooleanQuestion question;
     private Criteria criteria;
 
-    @Before
+    @BeforeEach
     public void create(){
         Profile profile = new Profile("Bull Hockey");
         Question question = new BooleanQuestion(1, "Got bonuses?");
